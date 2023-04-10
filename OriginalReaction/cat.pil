@@ -1,0 +1,15 @@
+# Antonio Llano
+# React-Produce complex scheme
+
+length h = 22  
+length f = 6
+length fa = 6
+length m = 22
+length s = 6
+
+Cj = h fa m s
+REACT = m( s( f( m( s( h + ) ) ) ) ) f
+BACK = m s f
+Br = h f m s
+PRODUCE = h( f( m s h( f( m s + ) ) ) ) s
+HELPER = f h f
