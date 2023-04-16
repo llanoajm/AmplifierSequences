@@ -9,25 +9,32 @@ length sc = 7
 length fb = 7
 length mc = 15
 
+# React Step Species
 Cj = sc mc fc hcj @initial 10 nM 
 ReactCBCj = fb(sc( mc( + fc* ) ) ) mb*(sb*( + hcj) ) @initial 100 nM
 BACKCB = fb sc mc @initial 100 nM 
 ReactIntCjBCj = sc( mc( fc( hcj + ) ) ) fb* mb*( sb*( + hcj ) ) @initial 0 nM
-
-sLeakWaste = hcjr( fcr mcr scr + fcr( hckr( fcr( + ) ) ) ) sbr* @initial 0 nM
-LeakWaste = sc mc fc hcj( + sb* ) fc*( hck*( fc*( + ) ) ) @initial 0 nM
-
 Br = sb mb fb hbr @initial 10 nM
-FluxBCj = hcj sb mb @initial 0 nM
 Waste = sc( mc( fc( hcj + ) ) ) fb*( mb*( sb*( + ) ) ) hbr @initial 0 nM
 
+# Produce Step Species
+FluxBCj = hcj sb mb @initial 0 nM
 ProduceBCjCk = sc mc fc( hcj( + sb* ) ) hck*(fc*( + sc mc ) ) @initial 100 nM
 HelperCCk = fc hck fc @initial 75 nM
-
 Ck = sc mc fc hck @initial 0 nM
 Waste2 = hcj( sb( mb + ) ) fc*( hck*( fc*( + ) ) ) @initial 0 nM
 ProduceIntBCjCk = hcj( sb( mb + ) ) fc* hck*( fc*( + sc mc ) ) @initial 0 nM
 
-# e13 should be hcj( sb( mb + ) ) fc* hck*( fc*( + sc mc ) )
-# peppercorn -o RPSOscillatorEnumeration.pil -c  -L 7 --ignore-branch-4way  RPSOscillator.pil
-# peppercorn -o RPSOscillatorEnumeration.pil RPSOscillator.pil -c -L
+# Leak Waste Species
+LeakedReactCBr = fb( sc( mc( + fc* ) ) ) mb*( sb*( + ) ) fb hbr @initial 0 nM
+LeakedProduceBCjCk = sc mc fc hcj( + sb* ) fc*( hck*( fc*( + ) ) ) @initial 0 nM
+LeakedReactCBCjProduceBCjCk = hcj( sb( mb( + fb( sc( + mc( + fc* ) ) ) ) sb* + ) ) fc* hck*( fc*( + sc mc ) )
+
+
+
+# e30 = sc( mc( fc( hck + ) ) ) fb* mb*( sb*( + hcj ) )
+# e35 = sc( mc( fc( hck + ) ) ) fb*( mb*( sb*( + ) ) ) hbr
+
+# e30 + Br -> e35 + FluxBCj V.S ReactCBCj + Br -> LeakedReactCBr + FluxBCj
+
+# Run w/ peppercorn -o enum.pil main.pil -c  -L 7 --ignore-branch-4way  
