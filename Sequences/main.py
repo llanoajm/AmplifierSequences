@@ -1,4 +1,4 @@
-from nupack import Domain, TargetStrand, TargetComplex, TargetTube, SetSpec
+from nupack import Domain, TargetStrand, TargetComplex, TargetTube, SetSpec, Model, tube_design
 
 hcj = Domain('N', name='hcj');
 hck = Domain('N', name='hck');
@@ -31,7 +31,11 @@ LeakedReactCBr = TargetComplex([BackCB, sweeplineReact, Br], "(((+.)))((+))..", 
 LeakedProduceBCjCk = TargetComplex([Cj, sweeplineProduce, HelperCCk], "...(+.)(((+)))", name = 'LeakedProduceBCjCk');
 # LeakedReactCBCjProduceBCjCk = TargetComplex([BackCB, sweeplineReact, sweeplineProduce, Ck, FluxBCj], "(((+((+(+.)))).+)).((+..))", name = 'LeakedReactCBCjProduceBCjCk');
 
-t1 = TargetTube(on_targets={WasteBCjCk: 1e-8, WasteCjBr: 1e-8, ReactCBCj: 1e-8, ReactIntCBCj: 1e-8, ProduceBCjCk: 1e-8, ProduceIntBCjCk: 1e-8}, name='t1',
+autocatalytic_amplifier_tube = TargetTube(on_targets={WasteBCjCk: 1e-8, WasteCjBr: 1e-8, ReactCBCj: 1e-8, ReactIntCBCj: 1e-8, ProduceBCjCk: 1e-8, ProduceIntBCjCk: 1e-8}, name='t1',
     off_targets=SetSpec(max_size=3, include=[LeakedReactCBr, LeakedProduceBCjCk], exclude=[ReactCBCj, ReactIntCBCj, ProduceBCjCk, ProduceIntBCjCk]))
+
+sequence_design_model = Model();
+reaction_tubes = [autocatalytic_amplifier_tube];
+design = tube_design(tubes=reaction_tubes, model=sequence_design_model)
 
 print("success")
